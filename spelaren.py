@@ -1,42 +1,65 @@
+from slowtypeshii import slowprint
+from rensa import *
+
 class spelaren():
-    def __init__(self,atk,hp,int,maxhp):
-        self.atk = atk
+    def __init__(self, atk, mhp, hp, int, stk, lvl, exp, bryggdnedräkning, boknedräkning, levande):
+        self.base_atk = atk 
+        self.mhp = mhp
         self.hp = hp
         self.int = int
-        self.maxhp = maxhp
+        self.lvl = lvl
+        self.exp = exp
+        self.stk = stk
+        self.bryggdnedräkning = bryggdnedräkning
+        self.boknedräkning = boknedräkning
+        self.levande = levande
+
+
+    @property
+    def atk(self):
+        if klassval == "3": 
+            return self.base_atk + self.stk
+        elif klassval == "1": 
+            return self.base_atk + ((self.mhp - self.hp)-(self.mhp-self.hp)%2)//2
+        else: 
+            return self.base_atk
 
 klas = False
 
 while not klas:
-    klassval = int(input("""
-                        1. Bygg  
+    slowprint("""
 
-                        2. Teknik
+    Välj din klass (bygg rekommenderas för de som vill ha vinstchans)
+    
+    1. Bygg
 
-                        3. Samhäll
-    Ditt val---> """))
+    2. Teknik
 
-    if klassval == 1:
-        klass = spelaren(21,21,0,21)
-        print(f"Random Dansk: Du går bygg och har därmed statsen: {klass.atk} atk, {klass.hp} hp och {klass.int} int")
-        klas = True
-        print("""
-Du ser dig omkring, men du är lite för korkad för att lista ut vart du bör ta vägen.""")
+    3. Samhäll
 
-    elif klassval == 2:
-        klass = spelaren(5,12,21,12)
-        print(f"Random Dansk: Det var alltså du som lukta, du har statsen: {klass.atk} atk, {klass.hp} hp och {klass.int} int")
-        klas = True
-        print("""
-Du känner hur stanken av dig själv sticker i näsan, men detta kanske kan vara ett bra vapen mot monster.""")
-    elif klassval == 3:
-        klass = spelaren(14,14,14,14)
-        print(f"Random Dansk: Du går nu sam med statsen: {klass.atk} atk, {klass.hp} hp och {klass.int} int")
-        klas = True
-        print("""
-Här står du vid receptionen och tror att du är den smartaste i denna skola, men detta kunde inte vara längre ifrån sanningen.""")
+    """)
+    klassval = input("Ditt val---> ")
+    rensa()
+
+    if klassval == "1":
+            klass = spelaren(20,100,100,0,0,0,0,0,0, True)
+            slowprint(f"Du går bygg och har därmed statsen: {klass.atk} atk, {klass.mhp} hp och {klass.int} int. Din skada ökar också med förlorat hp!")
+            klas = True
+
+    elif klassval == "2":
+            klass = spelaren(0,100,100,20,5,0,0,0,0, True)
+            slowprint(f"Det var alltså du som lukta, du har statsen: {klass.atk} atk, {klass.mhp} hp och {klass.int} int, du  har också {klass.stk} stinknivå.")
+            klas = True
+
+    elif klassval == "3":
+            klass = spelaren(10,100,100,10,0,0,0,0,0, True)
+            slowprint(f"Du går nu sam med statsen: {klass.atk} atk, {klass.mhp} hp och {klass.int} int. Se till att samla aura!")
+            klas = True
+
     else:
-        print("System: Välj ett av alternativen tack :)")
+            slowprint("Välj ett av alternativen tack :)")
+    
+
 
 
 
